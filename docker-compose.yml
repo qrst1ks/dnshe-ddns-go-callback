@@ -1,7 +1,7 @@
 services:
   dnshe-ddns-go-callback:
     image: qrst1ks4/dnshe-ddns-go-callback:latest
-    platform:linux/arm64
+    platform: linux/arm64
     container_name: dnshe-ddns-go-callback
     restart: unless-stopped
     ports:
