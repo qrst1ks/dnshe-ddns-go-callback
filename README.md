@@ -4,7 +4,7 @@
 
 ## 项目开发目的
 
-解决 `ddns-go Callback` 不提供 `record_id`、而 `DNSHE 更新接口必须要 `record_id`` 的问题。
+解决 `ddns-go Callback` 不提供 `record_id`、而 `DNSHE 更新接口必须要 `record_id` 的问题。
 
 `ddns-go` 的 Callback 机制是一个通用回调出口，每次回调提供以下变量：
 
@@ -24,16 +24,24 @@
 
 本项目提供一个桥接层，将 Callback 提供的基础信息转换成 DNSHE 所要求的“查询 + 定位 + 更新”流程。
 
-## Docekr（推荐）
+## Docker（推荐）
 
-### 方式 1：直接拉镜像运行（推荐）
+### 方式 1：从镜像创建容器（推荐）
 
 ```bash
-docker pull qrst1ks4/dnshe-ddns-go-callback:latest
-docker run -d --name dnshe-ddns-go-callback -p 18491:18491 -v $(pwd)/data:/data qrst1ks4/dnshe-ddns-go-callback:latest
+mkdir -p ~/docker/dnshe-ddns-go-callback/data && \
+docker pull qrst1ks4/dnshe-ddns-go-callback:latest && \
+docker run -d \
+  --name dnshe-ddns-go-callback \
+  --restart unless-stopped \
+  --platform linux/arm64 \
+  -p 18491:18491 \
+  -e PORT=18491 \
+  -v ~/docker/dnshe-ddns-go-callback/data:/data \
+  qrst1ks4/dnshe-ddns-go-callback:latest
 ```
 
-启动后访问：`http://本机IP地址:18491/`
+启动成功后访问：`http://本机IP地址:18491/`
 
 ### 方式 2：docker compose
 
@@ -81,16 +89,6 @@ cd dnshe-ddns-go-callback
 ```
 
 推荐：`POST` + `application/json`。
-
-## 常见问题
-
-### 页面提示未配置 API
-
-先在首页保存 `API Key` 和 `API Secret`，再回到 ddns-go 触发更新。
-
-### 重启后是否要重复填写 API
-
-不需要。配置会加密保存到持久化目录（Docker 下为 `./data`）。
 
 ## 相关链接
 
