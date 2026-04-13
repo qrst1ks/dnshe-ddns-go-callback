@@ -37,3 +37,12 @@ bin/
 
 # Logs
 *.log
+
+# Runtime secrets/config
+.config_master_key
+runtime_config.enc
+data/
+release/
+
+# Project binary
+dnshe-ddns-go-callback

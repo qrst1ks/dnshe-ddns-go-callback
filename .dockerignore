@@ -1,0 +1,10 @@
+.git
+.gitignore
+data
+release
+runtime_config.enc
+.config_master_key
+*.md
+*.bat
+start.sh
+start.command

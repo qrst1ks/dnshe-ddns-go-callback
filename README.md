@@ -1,8 +1,10 @@
 # dnshe-ddns-go-callback
 
-这是一个围绕 **ddns-go Callback 扩展能力** 设计的独立辅助项目，用于补足 `ddns-go -> DNSHE` 这条链路。
+`ddns-go` 到 `DNSHE` 的回调桥接服务。  
 
-## 项目目的
+## 项目开发目的
+
+解决 `ddns-go Callback` 不提供 `record_id`、而 `DNSHE 更新接口必须要 `record_id`` 的问题。
 
 `ddns-go` 的 Callback 机制是一个通用回调出口，每次回调提供以下变量：
 
@@ -20,13 +22,81 @@
 | 记录类型               | ttl            |
 | TTL                  |                |
 
-本项目提供一个桥接层，将 Callback 提供的基础信息转换成 DNSHE 所要求的"查询 + 定位 + 更新"流程。
+本项目提供一个桥接层，将 Callback 提供的基础信息转换成 DNSHE 所要求的“查询 + 定位 + 更新”流程。
 
-## 关于 DNSHE 和 ddns-go
+## Docekr（推荐）
+
+### 方式 1：直接拉镜像运行（推荐）
+
+```bash
+docker pull qrst1ks4/dnshe-ddns-go-callback:latest
+docker run -d --name dnshe-ddns-go-callback -p 18491:18491 -v $(pwd)/data:/data qrst1ks4/dnshe-ddns-go-callback:latest
+```
+
+启动后访问：`http://本机IP地址:18491/`
+
+### 方式 2：docker compose
+
+```bash
+git clone https://github.com/qrst1ks/dnshe-ddns-go-callback
+cd dnshe-ddns-go-callback
+docker compose up -d
+```
+
+## 本地启动
+
+```bash
+git clone https://github.com/qrst1ks/dnshe-ddns-go-callback
+cd dnshe-ddns-go-callback
+```
+
+启动方式：
+
+- macOS 双击：`start.command`
+- Windows 双击：`start.bat`
+- Linux/macOS 终端：`./start.sh`
+
+默认端口：`18491`  
+启动后访问：`http://本机IP地址:18491/`
+
+## 配置步骤
+
+### 1. 在网页填写 DNSHE API
+
+打开首页，在「DNSHE API 配置」中填写并保存：
+
+- `API Key`
+- `API Secret`
+
+### 2. 在 ddns-go 里配置 Callback
+
+`URL` 填写：
+
+`http://本机IP地址:18491/update`
+
+`RequestBody` 填写：
+
+```json
+{"domain":"#{domain}","ip":"#{ip}","recordType":"#{recordType}","ttl":"#{ttl}"}
+```
+
+推荐：`POST` + `application/json`。
+
+## 常见问题
+
+### 页面提示未配置 API
+
+先在首页保存 `API Key` 和 `API Secret`，再回到 ddns-go 触发更新。
+
+### 重启后是否要重复填写 API
+
+不需要。配置会加密保存到持久化目录（Docker 下为 `./data`）。
+
+## 相关链接
 
 - DNSHE 官网：<https://www.dnshe.com/>
 - ddns-go 官方仓库：<https://github.com/jeessy2/ddns-go>
 
 ## 许可证
 
-本项目采用 MIT License。
+MIT License
