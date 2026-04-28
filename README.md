@@ -1,5 +1,3 @@
-# dnshe-ddns-go-callback
-
 > ⚠️ **项目状态：已停止维护（Archived / Unmaintained）**
 
 本项目不再维护。  
