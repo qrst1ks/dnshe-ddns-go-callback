@@ -1,5 +1,25 @@
 # dnshe-ddns-go-callback
 
+> ⚠️ **项目状态：已停止维护（Archived / Unmaintained）**
+
+本项目不再维护。  
+请迁移到新的 DNSHE 专用 DDNS 项目：
+
+👉 **DNSHE-GO：** [https://github.com/qrst1ks/dnshe-go](https://github.com/qrst1ks/dnshe-go)
+
+---
+
+本仓库历史代码仅保留作参考用途，不再接收功能更新或问题修复。
+
+## 迁移建议
+
+如果你当前仍在使用本项目，建议尽快迁移到新项目：
+
+- 新项目地址：<https://github.com/qrst1ks/dnshe-go>
+- 本项目将不再提供后续支持
+
+# dnshe-ddns-go-callback
+
 `ddns-go` 到 `DNSHE` 的回调桥接服务。  
 
 ## 项目开发目的
